@@ -1,0 +1,15 @@
+# Local .terraform directories
+.terraform
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# template files with your config info
+*.template
+
+# pocs folder
+pocs/*
+
+#Mac files
+.DS_Store

@@ -1,0 +1,27 @@
+---
+- hosts: cache_nodes
+  remote_user: centos
+  become: true
+  tasks:
+    - include_role: 
+        name: centos/aws-swap-bootstrap
+      vars:        
+        swap_file_size: 2048
+#####################################################
+# Install performance monitoring tools HTOP, sysstat (iostat)
+#####################################################
+    - include_role: 
+        name: centos/os-bootstrap        
+#####################################################
+# Copy SolCache to cache Node
+#####################################################
+    - include_role: 
+        name: solace/solace-cache
+      vars:
+        sol_cache_instance_name: PS_CacheInstance_{{ groups['cache_nodes'].index(inventory_hostname) }}
+        sol_cache_vpn_name: PSCache_VPN
+        sol_cache_clientusr_name: PSCacheUsr
+        sol_cache_clientusr_pwd: solace123
+        sol_broker_primary_private_ip: "{{ broker_primary_private_ip }}"
+        sol_broker_backup_private_ip: "{{ broker_backup_private_ip }}"
+

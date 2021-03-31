@@ -1,0 +1,10 @@
+---
+# defaults file for IOTMonitor
+file_owner: centos
+file_mode: "0777"
+sol_cache_instance_name: CacheInstance1
+sol_cache_vpn_name: Cache_VPN
+sol_cache_clientusr_name: Cache_Usr
+sol_cache_clientusr_pwd: solace_pwd
+sol_broker_primary_private_ip: 10.0.0.1
+sol_broker_backup_private_ip: 10.0.0.2

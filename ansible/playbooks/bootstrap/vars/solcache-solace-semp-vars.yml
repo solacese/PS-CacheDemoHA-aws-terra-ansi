@@ -1,0 +1,202 @@
+#####################################################
+# Config variables SEMP calls
+#####################################################
+semp_admin_user: admin
+semp_admin_password: admin
+
+#####################################################
+# Broker Max Spool
+#####################################################
+max_spool_usage: 100000
+
+#####################################################
+# config variables for creating the VPN
+#####################################################
+#Message VPN params
+vpn:
+  vpn_name: "PSCache_VPN"
+  maxMsgSpoolUsage: 100000
+  authenticationBasicType: "none"
+  serviceMqttMaxConnectionCount: 200000
+  serviceMqttPlainTextEnabled: "true"
+  serviceMqttPlainTextListenPort:  1884 
+
+#####################################################
+# config variables for creating the ClientProfile
+#####################################################
+client_profiles:
+- clientProfileName: "PSCacheCP"
+  allowGuaranteedMsgSendEnabled: "false"
+  allowGuaranteedMsgReceiveEnabled: "false"
+  allowTransactedSessionsEnabled: "false"
+  allowSharedSubscriptionsEnabled: "true"
+  maxConnectionCountPerClientUsername: 50
+  serviceSmfMaxConnectionCountPerClientUsername: 50
+  serviceWebMaxConnectionCountPerClientUsername: 0
+  allowBridgeConnectionsEnabled: "false"
+  allowGuaranteedEndpointCreateEnabled: "false"
+  maxEndpointCountPerClientUsername: 10000
+  maxEgressFlowCount: 10000
+  maxIngressFlowCount: 10000
+  apiQueueManagementCopyFromOnCreateName: ""
+  apiTopicEndpointManagementCopyFromOnCreateName: ""
+  maxSubscriptionCount: 10000
+  maxTransactedSessionCount: 10
+  maxTransactionCount: 10
+- clientProfileName: "webCP"
+  allowGuaranteedMsgSendEnabled: "true"
+  allowGuaranteedMsgReceiveEnabled: "true"
+  allowTransactedSessionsEnabled: "false"
+  allowSharedSubscriptionsEnabled: "true"
+  maxConnectionCountPerClientUsername: 200000
+  serviceSmfMaxConnectionCountPerClientUsername: 10000
+  serviceWebMaxConnectionCountPerClientUsername: 200000
+  allowBridgeConnectionsEnabled: "false"
+  allowGuaranteedEndpointCreateEnabled: "false"
+  maxEndpointCountPerClientUsername: 10000
+  maxEgressFlowCount: 10000
+  maxIngressFlowCount: 10000
+  apiQueueManagementCopyFromOnCreateName: ""
+  apiTopicEndpointManagementCopyFromOnCreateName: ""
+  maxSubscriptionCount: 10000
+  maxTransactedSessionCount: 10
+  maxTransactionCount: 10
+- clientProfileName: "testCP"
+  allowGuaranteedMsgSendEnabled: "true"
+  allowGuaranteedMsgReceiveEnabled: "true"
+  allowTransactedSessionsEnabled: "false"
+  allowSharedSubscriptionsEnabled: "true"
+  maxConnectionCountPerClientUsername: 200000
+  serviceSmfMaxConnectionCountPerClientUsername: 10000
+  serviceWebMaxConnectionCountPerClientUsername: 200000
+  allowBridgeConnectionsEnabled: "false"
+  allowGuaranteedEndpointCreateEnabled: "false"
+  maxEndpointCountPerClientUsername: 10000
+  maxEgressFlowCount: 10000
+  maxIngressFlowCount: 10000
+  apiQueueManagementCopyFromOnCreateName: ""
+  apiTopicEndpointManagementCopyFromOnCreateName: ""
+  maxSubscriptionCount: 10000
+  maxTransactedSessionCount: 10
+  maxTransactionCount: 10
+
+#####################################################
+# config variables for creating the Client-Usernames
+#####################################################
+
+client_usernames:
+- username: "PSCacheUsr"
+  aclProfileName: "default"
+  clientProfileName: "PSCacheCP"
+  enabled: true
+  password: solace123
+- username: "webUsr"
+  aclProfileName: "default"
+  clientProfileName: "webCP"
+  enabled: true
+  password: solace123
+- username: "testUsr"
+  aclProfileName: "default"
+  clientProfileName: "testCP"
+  enabled: true
+  password: solace123
+
+#####################################################
+# config variables for creating queues
+#####################################################
+# List of Queues generated from Terraform based on the number of SDKPerf Nodes 
+
+queues:
+- queueName: "default"
+  accessType: "non-exclusive"
+  consumerAckPropagationEnabled: "true" 
+  egressEnabled: false
+  ingressEnabled: false
+  maxBindCount: 1000
+  maxMsgSize: 10000000
+  maxMsgSpoolUsage: 50000
+  permission: "delete"
+  rejectMsgToSenderOnDiscardBehavior: "never"  
+  subscription_topics:
+  - "TestTopic1"
+  - "TestTopic2"
+
+#####################################################
+# config variables for creating Distributed Caches
+#####################################################
+distributed_caches:
+- cacheName: "AMER_DistributedCache"
+  enabled: true
+  heartbeat: 10
+  scheduledDeleteMsgDayList: ""
+  scheduledDeleteMsgTimeList: ""
+- cacheName: "EMEA_DistributedCache"
+  enabled: true
+  heartbeat: 10
+  scheduledDeleteMsgDayList: ""
+  scheduledDeleteMsgTimeList: ""
+
+#####################################################
+# config variables for creating Caches Clusters
+#####################################################
+cache_clusters:
+- cacheName: "AMER_DistributedCache"
+  clusterName: "NYSE_CacheCluster"
+  enabled: true
+  globalCachingEnabled: false
+  globalCachingHeartbeat: 3
+  globalCachingTopicLifetime: 3600
+  maxMemory: 2048
+  maxMsgsPerTopic: 1
+  maxRequestQueueDepth: 100000
+  maxTopicCount: 2000000
+  msgLifetime: 0
+  newTopicAdvertisementEnabled: false
+  subscription_topics:
+  - "MD/NYSE/>"
+  - "TestTopic1"
+- cacheName: "AMER_DistributedCache"
+  clusterName: "BMV_CacheCluster"
+  enabled: true
+  globalCachingEnabled: false
+  globalCachingHeartbeat: 3
+  globalCachingTopicLifetime: 3600
+  maxMemory: 2048
+  maxMsgsPerTopic: 1
+  maxRequestQueueDepth: 100000
+  maxTopicCount: 2000000
+  msgLifetime: 0
+  newTopicAdvertisementEnabled: false
+  subscription_topics:
+  - "MD/BMV/>"
+  - "TestTopic2"
+
+#####################################################
+# config variables for creating Caches Instances
+#####################################################
+
+cache_instances:
+- cacheName: "AMER_DistributedCache"
+  clusterName: "NYSE_CacheCluster"
+  instanceName: "PS_CacheInstance_0"
+  enabled: true
+  autoStartEnabled: true
+  stopOnLostMsgEnabled: false
+- cacheName: "AMER_DistributedCache"
+  clusterName: "NYSE_CacheCluster"
+  instanceName: "PS_CacheInstance_1"
+  enabled: true
+  autoStartEnabled: true
+  stopOnLostMsgEnabled: true
+- cacheName: "AMER_DistributedCache"
+  clusterName: "BMV_CacheCluster"
+  instanceName: "PS_CacheInstance_2"
+  enabled: true
+  autoStartEnabled: true
+  stopOnLostMsgEnabled: false
+- cacheName: "AMER_DistributedCache"
+  clusterName: "BMV_CacheCluster"
+  instanceName: "PS_CacheInstance_3"
+  enabled: true
+  autoStartEnabled: true
+  stopOnLostMsgEnabled: true  

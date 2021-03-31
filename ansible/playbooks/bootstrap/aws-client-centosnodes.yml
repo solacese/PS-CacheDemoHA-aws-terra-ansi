@@ -1,0 +1,49 @@
+---
+- hosts: client_nodes
+  remote_user: centos
+  become: true
+  tasks:
+    - include_role: 
+        name: centos/aws-swap-bootstrap
+      vars:        
+        swap_file_size: 2048
+    - include_role: 
+        name: centos/java-openjdk8-yum
+#####################################################
+# Install performance monitoring tools HTOP, sysstat (iostat)
+#####################################################
+    - include_role: 
+        name: centos/os-bootstrap        
+#####################################################
+# Copy Web Demo to worker Node
+#####################################################
+    - name: install httpd
+      yum:
+        name: "httpd"
+        state: latest 
+        update_cache: true
+    - name: Start the httpd daemon
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+    - include_role: 
+        name: md_demo/MDWebMonitor
+      vars:        
+        sol_cache_vpn_name: PSCache_VPN
+        sol_cache_clientusr_name: webUsr
+        sol_cache_clientusr_pwd: solace123
+        sol_distributed_cache_name: AMER_DistributedCache
+        sol_broker_primary_public_ip: "{{ broker_primary_pub_ip }}"
+        sol_broker_backup_public_ip: "{{ broker_backup_pub_ip }}"
+#####################################################
+# Copy MDFeedhandler to worker Node & Enable httpd
+#####################################################
+    - include_role: 
+        name: md_demo/MDFeedhandler
+      vars:        
+        sol_cache_vpn_name: PSCache_VPN
+        sol_cache_clientusr_name: testUsr
+        sol_cache_clientusr_pwd: solace123
+        sol_broker_primary_private_ip: "{{ broker_primary_private_ip }}"
+        sol_broker_backup_private_ip: "{{ broker_backup_private_ip }}"

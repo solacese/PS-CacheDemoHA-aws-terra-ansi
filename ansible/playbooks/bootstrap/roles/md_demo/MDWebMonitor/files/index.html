@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="">
+<head>
+    <title>Solace Market Data Client</title>
+
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- style -->
+	<link rel="stylesheet"  href="./cssm/jquery.mobile-1.1.0.css" />
+	<link rel="stylesheet"  href="./cssm/styles.css" />
+    <!-- jquery ui -->
+
+	 <script src="./lib/jquery.js"></script>
+	<script src="./lib/jquery.mobile-1.1.0.js"></script>
+	
+    <!-- solclientjs -->
+    <script type="text/javascript" src="./sol/solclient.js"></script>
+
+		<!-- business logic -->
+		<script type="text/javascript" src="./sol/solConstants.js"></script>		
+    <script type="text/javascript" src="./sol/solPubSubHelper.js"></script>
+    <script type="text/javascript" src="./sol/solUIHelper.js"></script>
+   
+	<!--<script type="text/javascript" charset="utf-8" src="cordova-1.9.0.js"></script>-->
+	<script type="text/javascript">
+		$.support.cors = true;
+		$.mobile.allowCrossDomainPages = true;
+		
+		
+		$('#home').live('pagebeforecreate',function(event){
+			initSolace();
+			cleanupTables();
+			
+			addSubscription("MD/>");
+
+			
+		 });    
+
+		 		 
+		$( function() {
+
+		  document.addEventListener("deviceready", onDeviceReady, false);
+		  //document.addEventListener("online", onOnline, false);
+
+		} );
+
+
+		// PhoneGap is loaded and it is now safe to make calls PhoneGap methods
+		//
+		function onDeviceReady() {
+			//alert("on Device ready called");
+			//connectSession();		
+			/*
+			var ajax = new XMLHttpRequest();
+     		ajax.open("GET","http://search.twitter.com/search.json?q=bacon",true);
+     		ajax.send();
+ 
+		     ajax.onreadystatechange=function(){
+        	 	if(ajax.readyState==4 && (ajax.status==200)){
+               		//document.getElementById('main').innerHTML = ajax.responseText;
+               		alert(ajax.responseText);
+          	 	}
+     		}
+     		*/
+     	
+		}
+		function onOnline() {
+			//alert("on Online called");
+			//checkInternetConnection();
+			//connectSession();
+			
+			
+		}
+		
+window.onload = function () {
+
+}
+</script>
+	<script src="./sol/canvasjs.min.js"></script>
+	
+</head>
+
+<body >
+
+<div data-role="page" id="home" data-theme="a">
+
+	<div data-role="header" class="exchangeHeader" data-theme="a">
+		<div id="header_conten"><img src='cssm/images/newsolace.png' alt='Exchnage Logo' height='100%' width='100%' id='exchange-banner'></div>
+	</div>
+
+	<div data-role="main" class="ui-content">
+		
+		<div data-role="main" class="ui-content">
+			<div data-role="collapsibleset" >
+			  	<div data-role="collapsible" data-collapsed="false">
+					<h3><font colour="red">Market Data Monitor</font></h3>
+
+					<table id="tab_securities1" class="mddTableGrid" width="100%" cellpadding="0">
+						<tbody>
+						<tr>
+							<td colspan="2" width="35%" valign="top">
+								<div>
+									<div class="block_right_inner" style="height: 45px;">
+									<div> </div>
+									<img id="red" src="img/red-on.png" height="25" width="25">
+									<img id="amber" src="img/amber-off.png" height="25" width="25">
+									<img id="green" src="img/green-off.png" height="25" width="25">
+									<div id="divSvrStatus" style="height:0px; background:#fff; color:#000000"> </div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div style="text-align:center; text-shadow: 1px 1px 4px #777;"><div style="color:#000000;">Cache Return Code:</div><div style="font-weight: bold; color:#000000;" id="CacheCode">N/A</div></div>
+							</td>
+							<td>
+								<div style="text-align:center; text-shadow: 1px 1px 4px #777;"><div style="color:#000000;">Cache Return SubCode:</div><div style="font-weight: bold; color:#000000;" id="CacheSubCode">N/A</div></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="buttons">
+									<input type="submit" id="queueBind" name="login" value="Re-subscribe WITH Solace Cache " class="bt" onclick="resubscribeWCache();"/>
+								</div>
+							</td>
+							<td>
+								<div class="buttons">
+									<input type="submit" id="queueBind" name="login" value="Re-subscribe WITHOUTH Solace Cache " class="bt" onclick="resubscribeWOCache();"/>
+								</div>
+							</td>
+
+						</tr>
+						<tr>
+							<td colspan="2" width="35%" valign="top">
+				
+								<table id="tab_securities" class="mddTableGrid" width="100%">
+					
+									<tbody>
+									<tr>
+										<th colspan="15">Market Data</th>
+									</tr>
+									<tr>
+										<th>Symbol</th>
+										<th>Exchange</th>
+										<th style="min-width:15px"><img width="15px" src='img/up.png'/><img width="15px" src='img/down.png'/></th>
+										<th>Last Trade</th>
+										<th>Volume</th>
+									</tr>
+										
+									<!-- Here dynamic rows will be created-->
+									
+									</tbody>
+								</table>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+		    	</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>
+
+</html>
+
+<script>
+//when this page loads, connect to Solace. 
+//initSolace();
+</script>
+
+

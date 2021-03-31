@@ -1,0 +1,10 @@
+---
+# defaults file for IOTMonitor
+file_owner: root
+file_mode: "0777"
+sol_cache_vpn_name: Cache_VPN
+sol_cache_clientusr_name: Cache_Usr
+sol_cache_clientusr_pwd: solace_pwd
+sol_distributed_cache_name: defaultDistributedCache
+sol_broker_primary_public_ip: 10.0.0.1
+sol_broker_backup_public_ip: 10.0.0.2

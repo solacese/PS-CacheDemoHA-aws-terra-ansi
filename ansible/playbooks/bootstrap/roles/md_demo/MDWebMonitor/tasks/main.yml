@@ -1,0 +1,14 @@
+---
+# tasks file for IOTWebMonitor
+- name: Copy MDWebMonitor to worker nodes
+  copy:
+    src: .
+    dest: /var/www/html
+    owner: "{{ file_owner }}"
+    mode: "{{ file_mode }}"
+- name: Parse & copy solConstants.js template to Worker node
+  template:
+    src: solConstants.js
+    dest: /var/www/html/sol/solConstants.js
+    owner: "{{ file_owner }}"
+    mode: "{{ file_mode }}"

@@ -1,0 +1,56 @@
+---
+# tasks file for SolaceCache
+- name: Create "solace" directory
+  file:
+    path: "/usr/local/solace"
+    state: directory
+    owner: centos
+
+- name: Copy solClient to cache nodes
+  copy:
+    src: ./solclient_Linux26.tar.gz
+    dest: /tmp/solclient_Linux26.tar.gz
+    owner: "{{ file_owner }}"
+    mode: "{{ file_mode }}"
+- name: Unarchive a solClient that is already on the remote machine
+  unarchive:
+    src: /tmp/solclient_Linux26.tar.gz
+    dest: /usr/local/solace/
+    remote_src: yes
+- name: Get solclient path
+  command: ls /usr/local/solace/
+  register: solclient_name
+- debug: msg="{{solclient_name.stdout}}"
+- name: Rename solClient folder
+  command: "mv /usr/local/solace/{{ solclient_name.stdout }} /usr/local/solace/solclient"
+
+- name: Copy SolaceCache to cache nodes
+  copy:
+    src: ./SolaceCache_Linux26.tar.gz
+    dest: /tmp/SolaceCache_Linux26.tar.gz
+    owner: "{{ file_owner }}"
+    mode: "{{ file_mode }}"
+- name: Unarchive a SolaceCache that is already on the remote machine
+  unarchive:
+    src: /tmp/SolaceCache_Linux26.tar.gz
+    dest: /usr/local/solace/
+    remote_src: yes
+
+- name: Parse & copy InstanceConfig template to Cache node
+  template:
+    src: cache_instance_config.tpl
+    dest: "/usr/local/solace/SolaceCache/config/{{ sol_cache_instance_name }}"
+    owner: "{{ file_owner }}"
+    mode: "{{ file_mode }}"
+- name: Copy the SolaceCache service file to /usr/lib/systemd/system
+  copy:
+    src: /usr/local/solace/SolaceCache/bin/SolaceCache.service
+    dest: /usr/lib/systemd/system
+    remote_src: yes
+- name: Start the SolaceCache daemon
+  service:
+    name: SolaceCache
+    state: started
+    enabled: yes
+
+

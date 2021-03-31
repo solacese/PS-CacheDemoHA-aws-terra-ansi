@@ -1,0 +1,3 @@
+---
+# vars file for java-openjdk8-yum
+JDK: "true"
