@@ -12,7 +12,3 @@
 - name: Execute MDFeedhandler BMV - {{ sol_broker_primary_private_ip }}
   shell: nohup java -jar /home/centos/MDFeedhandler/MarketDataFeedhandler.jar -h "{{ sol_broker_primary_private_ip }}":55555,"{{ sol_broker_backup_public_ip }}":55555 -v "{{ sol_cache_vpn_name }}" -u "{{ sol_cache_clientusr_name }}" -p "{{ sol_cache_clientusr_pwd }}" -e BMV -i /home/centos/MDFeedhandler/config/instruments_BMV.properties </dev/null >/dev/null 2>&1 &  
   become: false
-
-#- name: Give sdkperf execute permissions
-#  become: true
-#  command: chmod -R +x sdkperf-c-x64
