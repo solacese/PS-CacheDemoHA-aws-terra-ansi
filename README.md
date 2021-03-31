@@ -1,4 +1,4 @@
-# Solace - Terraform & Ansible automated deployment
+# Solace - PubSub+ Cache Demo deployed with Terraform & Ansible
 
 ## Overview
 
@@ -8,17 +8,21 @@ The purpose of this repo is to provide a quick way to create from scratch a work
 
 The following image is a high level overview of the PS+ Cache configurations to be created on the brokers. It can be observed that we have: 
 + 2 sources (exchanges) of Market Data publishing prices to different topic prefixes.
-+ Web Clients (WebMonitor App) subscribing to all the Market Data available.
-+ 2 Distributed Caches: AMER_DistributedCache to manage Cache Clusters for the "Americas region", and EMEA_DistributedCache for future use on the "EMEA region".
-+ 2 Cache Clusters (in order to balance the load) within the AMER_DistributedCache: NYSE_CacheCluster to store all the MD from the NYSE exchange (topic MD/NYSE/>) and BMV_CacheCluster to store all the MD from the BMV exchange (topic MD/BMV/>).
-+ 4 Cache Instances "PS_CacheInstance_X", 2 Instances per Cache Cluster (in order to achieve HA within a Cache Cluster)
++ Web Clients (WebMonitor App) subscribing to all the Market Data available, either directly or via Cache Requests.
++ 2 Distributed Caches: 
+  - AMER_DistributedCache to manage Cache Clusters for the "Americas region".
+  - EMEA_DistributedCache for future use on the "EMEA region".
++ 2 Cache Clusters (in order to balance the load) within the AMER_DistributedCache: 
+  - NYSE_CacheCluster - to store all the MD from the NYSE exchange (topic MD/NYSE/>).
+  - BMV_CacheCluster - to store all the MD from the BMV exchange (topic MD/BMV/>).
++ 4 Cache Instances "PS_CacheInstance_X" - 2 Instances per Cache Cluster (in order to achieve HA within a Cache Cluster)
 
 ![PS+ Cache Topology](/images/topology.png)
 
 ### Warnings
 
 > :warning: This project is intended to serve as a POC for demonstrating the functionality of the Solace PubSub+ Cache, plus the automation capabilities of the Solace Brokers. Therefore, there are several opportunities for improvement.
-> :warning: Keep in mind that this code has not been tested or coded to be PRODUCTION ready.
+> :warning: ** Keep in mind that this code has not been tested or coded to be PRODUCTION ready. **
 
 
 ## Getting Started
@@ -29,7 +33,7 @@ There are 4 main subdirectories in this repository:
 - [ansible](/ansible) - Contains playbooks, inventories, variables & roles to be used by Ansible to configure the VMs. There are static files that can be modified according to what is needed, as well as files that will get dynamically created by Terraform upon execution, based on the resources terraform creates (ex: public or private IPs, etc.).
 - [images](/images) - Contains images for the README files
 
-Also, inside of each of those subdirectories, there are README files that can provide extra information as well as describing what CAN or HAS TO be configured on each section.
+Inside those subdirectories, there are README files that can provide extra information as well as describing what CAN or HAS TO be configured on each section.
 
 ### Prerequisites
 
@@ -51,20 +55,18 @@ AWS
      export AWS_ACCESS_KEY_ID="accesskey"
      export AWS_SECRET_ACCESS_KEY="secretkey"
    ```
-+ Modify the default identification values for the AWS resources on the [../terraform/aws-variables.tf](../terraform/aws-variables.tf) file, set them to something relevant to your demo. Ex:
++ Modify the default identification values for the AWS resources on the [/terraform/aws-variables.tf](/terraform/aws-variables.tf) file, set them to something relevant to your demo. Ex:
+
    ```
-variable "aws_ssh_key_name" {
-  default = "mmoreno_cache_demo_tfsa_key"
-}
-
-variable "tag_owner" {
-  default = "Manuel Moreno"
-}
-
-variable "tag_name_prefix" {
-  default = "mmoreno-SolaceCache"
-}
-
+     variable "aws_ssh_key_name" {
+       default = "mmoreno_cache_demo_tfsa_key"
+     }
+     variable "tag_owner" {
+       default = "Manuel Moreno"
+     }
+     variable "tag_name_prefix" {
+       default = "mmoreno-SolaceCache"
+     }
    ```
 
 PubSub+ Cache
