@@ -6,6 +6,8 @@ playbooks/bootstrap/semp_body/*.json
 
 # Do not upload PubSub+ Cache files
 playbooks/bootstrap/roles/solace/solace-cache/files/*
+# Only the readme file
+!playbooks/bootstrap/roles/solace/solace-cache/files/README.md
 
 # Do not upload Solace Doker images to the Repo
 *docker.tar.gz
