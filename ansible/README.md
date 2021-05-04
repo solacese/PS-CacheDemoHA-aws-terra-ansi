@@ -18,3 +18,4 @@ This path already contains Ansible playbooks & variable files, but some other re
 
 There is currently a single folders inside playbooks: 
 - [bootstrap](./playbooks/bootstrap) - This folder contains the playbooks, variables & roles required for configuring the Solace Brokers, Cache & Client nodes.
+
