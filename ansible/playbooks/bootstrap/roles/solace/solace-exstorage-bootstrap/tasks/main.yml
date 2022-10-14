@@ -23,19 +23,14 @@
 #    opts: defaults
     opts: nobarrier    
     state: mounted
-- name: Create "spool" directory
-  file:
-    path: "{{ solace_mount_path }}/spool"
-    state: directory
-    owner: solace
-- name: Create "softAdb" directory
-  file:
-    path: "{{ solace_mount_path }}/spool/softAdb"
-    state: directory
-    owner: solace
 - name: Create "jail" directory
   file:
     path: "{{ solace_mount_path }}/jail"
+    state: directory
+    owner: solace
+- name: Create "var" directory
+  file:
+    path: "{{ solace_mount_path }}/var"
     state: directory
     owner: solace
 - name: Create "diagnostics" directory
@@ -43,13 +38,18 @@
     path: "{{ solace_mount_path }}/diagnostics"
     state: directory
     owner: solace
-- name: Create "adbBackup" directory
+- name: Create "spool" directory
   file:
-    path: "{{ solace_mount_path }}/adbBackup"
+    path: "{{ solace_mount_path }}/spool"
     state: directory
     owner: solace
-- name: Create "var" directory
+- name: Create "spool-cache" directory
   file:
-    path: "{{ solace_mount_path }}/var"
+    path: "{{ solace_mount_path }}/spool-cache"
+    state: directory
+    owner: solace
+- name: Create "spool-cache-backup" directory
+  file:
+    path: "{{ solace_mount_path }}/spool-cache-backup"
     state: directory
     owner: solace

@@ -60,6 +60,7 @@ resource "local_file" "cache_inv_file" {
 # Trigger Ansible Tasks for the cache Nodes - Only after all the VM resources and Ansible Inventories & Playbooks have been created
 resource "null_resource" "trigger_cache_ansible" {
   provisioner "local-exec" {
+    #command = "echo DONE"
     command = "ansible-playbook -i ${local_file.cache_inv_file.filename} -e 'broker_primary_private_ip=${aws_instance.solace-broker-primary[0].private_ip} broker_backup_private_ip=${aws_instance.solace-broker-backup[0].private_ip}' --private-key ${var.private_key_path} ../ansible/playbooks/bootstrap/aws-cache-centosnodes.yml"
   }
   depends_on = [local_file.cache_inv_file]

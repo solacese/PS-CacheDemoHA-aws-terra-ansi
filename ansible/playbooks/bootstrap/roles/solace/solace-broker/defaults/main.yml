@@ -1,10 +1,10 @@
 ---
 # defaults file for solace-broker-ent-eval
-solace_edition: standard  #standard, ent_eval or enterprise
+solace_edition: standard  #standard, entEVAL or enterprise
 node_role: single
-solace_version: latest
+solace_image_version: latest
 solace_image_name: solace/solace-pubsub-standard
-solaceImage: solace/solace-pubsub-standard:latest
+solace_eval_key: ""
 solace_storage_rootpath: /vmr
 username_admin: admin
 username_admin_password: admin
