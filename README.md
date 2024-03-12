@@ -75,6 +75,7 @@ PubSub+ Cache
 + Copy your PS+ Cache Linux binaries (ex: *SolaceCache_Linux26-x86_64_opt_1.0.8.tar.gz*) plus the Solace C API for Linux binaries (ex: *solclient_Linux26-x86_64_opt_7.17.0.4.tar.gz*) to the path: [/ansible/playbooks/bootstrap/roles/solace/solace-cache/files](/ansible/playbooks/bootstrap/roles/solace/solace-cache/files) 
 + Rename the PS+ Cache Linux binary file to simply "*SolaceCache_Linux26.tar.gz*"
 + Rename the Solace C API for Linux binary file to simply "*solclient_Linux26.tar.gz*"
+> :warning: **To install PubSub+ Cache, you must use PubSub+ Messaging API for C, versions 7.24.1 or earlier. Versions 7.25.0 and later are not compatible with PubSub+ Cache.**
 
 SSH Keys
 
