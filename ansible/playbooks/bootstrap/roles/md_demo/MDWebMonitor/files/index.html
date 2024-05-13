@@ -32,9 +32,7 @@
 			initSolace();
 			cleanupTables();
 			
-			addSubscription("MD/>");
-
-			
+			addSubscription(initialSub);			
 		 });    
 
 		 		 
@@ -116,6 +114,20 @@ window.onload = function () {
 							</td>
 							<td>
 								<div style="text-align:center; text-shadow: 1px 1px 4px #777;"><div style="color:#000000;">Cache Return SubCode:</div><div style="font-weight: bold; color:#000000;" id="CacheSubCode">N/A</div></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" id="subTopic" name="login" value="MD/>" class="bt"/>
+							</td>
+							<td>
+								<div style="text-align:center; text-shadow: 1px 1px 4px #777;">
+								<div style="color:#000000;">Examples:</div>
+								<div style="font-weight: bold; color:#000000;" id="CacheSubCode">MD/></div>
+								<div style="font-weight: bold; color:#000000;" id="CacheSubCode">MD/BMV/></div>
+								<div style="font-weight: bold; color:#000000;" id="CacheSubCode">MD/NYSE/*/TRADES</div>
+								<div style="font-weight: bold; color:#000000;" id="CacheSubCode">MD/BMV/AMX.L/TRADES</div>
+							    </div>
 							</td>
 						</tr>
 						<tr>

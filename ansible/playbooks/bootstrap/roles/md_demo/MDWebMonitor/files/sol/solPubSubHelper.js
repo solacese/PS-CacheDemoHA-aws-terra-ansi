@@ -25,6 +25,9 @@
     var mySession = null;
 	var myCacheSession = null;
 
+	var initialSub = "MD/>";
+	var prevSubTopic = initialSub;
+
 //    var autoReconnect = false;
 //    var mySession = null;
 
@@ -735,26 +738,36 @@
 
 	//resubscribe to MarketData WITHOUTH Cache
 	this.resubscribeWOCache = function() {
-		//clean MD table
-		$("#tab_securities .tr_data").remove();
 
-		removeSubscription("MD/>");
+		//remove previos subscription
+		removeSubscription(prevSubTopic);
+		//keep track of the subscription
+		prevSubTopic = $("#subTopic").val();
 
 		$("#CacheCode").text("N/A");
 		$("#CacheSubCode").text("N/A");
 
-		addSubscription("MD/>");
+		//clean MD table
+		$("#tab_securities .tr_data").remove();
+
+		//addSubscription("MD/>");
+		addSubscription($("#subTopic").val());
+
 	};
 
 	//resubscribe to MarketData WITH Cache
 	this.resubscribeWCache = function() {
-		//clean MD table
-		$("#tab_securities .tr_data").remove();
 
-		removeSubscription("MD/>");
+		//remove previos subscription
+		removeSubscription(prevSubTopic);
+		//keep track of the subscription
+		prevSubTopic = $("#subTopic").val();
 
 		$("#CacheCode").text("...");
 		$("#CacheSubCode").text("...");
 
-		addCachedSubscription("MD/>");
+		//clean MD table
+		$("#tab_securities .tr_data").remove();
+		
+		addCachedSubscription($("#subTopic").val());
 	};

@@ -136,12 +136,9 @@
         name: centos/os-bootstrap
 
 #------------------------------------------------------------------------------------#
-- hosts: ha_sol_primary_nodes
+- hosts: sol_brokers
   remote_user: centos # login as user centos
   become: false # Run as Root
-  pre_tasks:
-  - include_vars: vars/solcache-solace-semp-vars.yml
-  - include_vars: vars/aws-ha-sol-brokers-vars.yml          # Load AWS variables for HA Solace Brokers from this file
   tasks:
 #####################################################
 # Ensure that SEMP is ready before sending any SEMP request to the broker
@@ -154,6 +151,15 @@
         delay: 10
         timeout: 300
       delegate_to: localhost
+
+#------------------------------------------------------------------------------------#
+- hosts: ha_sol_primary_nodes
+  remote_user: centos # login as user centos
+  become: false # Run as Root
+  pre_tasks:
+  - include_vars: vars/solcache-solace-semp-vars.yml
+  - include_vars: vars/aws-ha-sol-brokers-vars.yml          # Load AWS variables for HA Solace Brokers from this file
+  tasks:
 #####################################################
 # Assert Master Broker, to make sure that Config-Sync is Up
 #####################################################

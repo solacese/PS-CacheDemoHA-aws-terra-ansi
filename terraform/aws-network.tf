@@ -10,8 +10,7 @@ resource "aws_vpc" "solace_vpc" {
   instance_tenancy = "default"
   enable_dns_support = "true"
   enable_dns_hostnames = "true"
-  enable_classiclink = "false"
-  tags = {
+    tags = {
     Name    = "${var.tag_name_prefix}-solace-vpc"
     Owner   = var.tag_owner
     Purpose = var.tag_purpose
