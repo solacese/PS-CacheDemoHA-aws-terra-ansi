@@ -153,7 +153,7 @@ cache_clusters:
   msgLifetime: 0
   newTopicAdvertisementEnabled: false
   subscription_topics:
-  - "MD/NYSE/>"
+  - "MD/*/NYSE/>"
   - "TestTopic1"
 - cacheName: "AMER_DistributedCache"
   clusterName: "BMV_CacheCluster"
@@ -168,7 +168,7 @@ cache_clusters:
   msgLifetime: 0
   newTopicAdvertisementEnabled: false
   subscription_topics:
-  - "MD/BMV/>"
+  - "MD/*/BMV/>"
   - "TestTopic2"
 
 #####################################################

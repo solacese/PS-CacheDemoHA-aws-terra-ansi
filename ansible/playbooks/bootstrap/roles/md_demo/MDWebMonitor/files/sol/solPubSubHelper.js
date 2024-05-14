@@ -311,8 +311,8 @@
 
 			var data = tr_id.split("_");
 
-			var tr_id = data[0]+"_"+data[1]+"_"+data[2]
-			var strEx = data[1];
+			var tr_id = data[0]+"_"+data[2]+"_"+data[3]
+			var strEx = data[2];
         	
 			$.each(objJSON, function(index, tick) {
 			

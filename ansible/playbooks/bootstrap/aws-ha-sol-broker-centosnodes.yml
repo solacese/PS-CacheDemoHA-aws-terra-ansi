@@ -161,10 +161,10 @@
   - include_vars: vars/aws-ha-sol-brokers-vars.yml          # Load AWS variables for HA Solace Brokers from this file
   tasks:
 #####################################################
-# Assert Master Broker, to make sure that Config-Sync is Up
+# Assert Leader Broker, to make sure that Config-Sync is Up
 #####################################################
     - include_role:
-        name: solace/semp/assert-master-broker
+        name: solace/semp/assert-leader-broker
 #####################################################
 # Increase  the Broker Max-Spool Usage
 #####################################################
