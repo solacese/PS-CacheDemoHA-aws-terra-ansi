@@ -1,0 +1,14 @@
+---
+# tasks file for java-openjdk8-yum
+- name: install openjdk JRE
+  apt:
+    name: "openjdk-8-jre"
+    state: latest
+    update_cache: true
+  when: JDK == "false"
+- name: install openjdk JDK
+  apt:
+    name: "openjdk-8-jdk"
+    state: latest
+    update_cache: yes
+  when: JDK == "true"

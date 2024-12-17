@@ -1,16 +1,13 @@
 #####################################################
-# config variables for the Ansible Rol - centos/aws-swap-bootstrap 
+# config variables for the Ansible Rol - ubuntu/aws-swap-bootstrap 
 #####################################################
 swap_file_size: 2048
 
 #####################################################
-# config variables for the Ansible Rol - centos/suzuki-shunsuke.docker_ce_centos
+# config variables for the Ansible Rol - ubuntu/docker_ce
 #####################################################
-docker_centos_users: ["centos"]
-docker_centos_version: 19.03.5
-docker_centos_state: started
-docker_centos_enabled: true
-docker_centos_daemon_config:
+docker_ubuntu_users: ["ubuntu"]
+docker_ubuntu_daemon_config:
   storage-driver: overlay2
   selinux-enabled: true
   live-restore: true
@@ -24,7 +21,7 @@ docker_centos_daemon_config:
 solace_storage_rootpath: /var/opt/vmr
 username_admin: admin 
 username_admin_password: admin
-file_owner: centos
+file_owner: ubuntu
 file_mode: "0666"
 #system_scaling_maxconnectioncount: 10000
 #ulimit_nofile_hard: 42192

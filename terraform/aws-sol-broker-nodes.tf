@@ -16,7 +16,7 @@
 resource "aws_instance" "solace-broker-primary" {
   count = var.solace_broker_count
 
-  ami                    = var.centOS_ami[var.aws_region]
+  ami                    = var.ubuntu24_ami[var.aws_region]
   key_name               = var.aws_ssh_key_name
   subnet_id              = var.subnet_primary_id == "" ? aws_subnet.solace_primary_subnet[0].id : var.subnet_primary_id
   vpc_security_group_ids = var.solacebroker_secgroup_ids == [""] ? ["${aws_security_group.solacebroker_secgroup[0].id}"] : var.solacebroker_secgroup_ids 
@@ -63,7 +63,7 @@ resource "aws_instance" "solace-broker-primary" {
 resource "aws_instance" "solace-broker-backup" {
   count = var.solace_broker_count
 
-  ami                    = var.centOS_ami[var.aws_region]
+  ami                    = var.ubuntu24_ami[var.aws_region]
   key_name               = var.aws_ssh_key_name
   subnet_id              = var.subnet_backup_id == "" ? aws_subnet.solace_backup_subnet[0].id : var.subnet_backup_id
   vpc_security_group_ids = var.solacebroker_secgroup_ids == [""] ? ["${aws_security_group.solacebroker_secgroup[0].id}"] : var.solacebroker_secgroup_ids 
@@ -110,7 +110,7 @@ resource "aws_instance" "solace-broker-backup" {
 resource "aws_instance" "solace-broker-monitor" {
   count = var.solace_broker_count
 
-  ami                    = var.centOS_ami[var.aws_region]
+  ami                    = var.ubuntu24_ami[var.aws_region]
   key_name               = var.aws_ssh_key_name
   subnet_id              = var.subnet_monitor_id == "" ? aws_subnet.solace_monitor_subnet[0].id : var.subnet_monitor_id
   vpc_security_group_ids = var.solacebroker_secgroup_ids == [""] ? ["${aws_security_group.solacebroker_secgroup[0].id}"] : var.solacebroker_secgroup_ids 
@@ -171,7 +171,7 @@ resource "local_file" "solbroker_inv_file" {
 # Trigger Ansible Tasks for the Brokers - Only after all the VM resources and Ansible Inventories & Playbooks have been created
 resource "null_resource" "trigger_broker_ansible" {
   provisioner "local-exec" {
-    command = "ansible-playbook -i ${local_file.solbroker_inv_file.filename} --private-key ${var.private_key_path} ../ansible/playbooks/bootstrap/aws-ha-sol-broker-centosnodes.yml"
+    command = "ansible-playbook -i ${local_file.solbroker_inv_file.filename} --private-key ${var.private_key_path} ../ansible/playbooks/bootstrap/aws-ha-sol-broker-ubuntunodes.yml"
   }
 
   depends_on = [

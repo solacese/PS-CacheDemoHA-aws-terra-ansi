@@ -25,7 +25,7 @@ variable "private_key_path" {
   description = "Local path to the private key used to connect to the Instances (Not to be uploaded to AWS)"
 }
 variable "ssh_user" {
-  default = "centos"
+  default = "ubuntu"
   description = "SSH user to connect to the created instances (defined by the AMI being used)"
 }
 
@@ -109,13 +109,13 @@ variable "msging_secgroup_ids" {
   description = "The AWS security_group_ids to be asigned to the Messaging nodes - Leave the value empty for automatically creating one."
 }
 
-variable "centOS_ami" {
+variable "ubuntu24_ami" {
   type        = map
-  default = { # CentOS
-    us-east-1 = "ami-02eac2c0129f6376b"
-    us-east-2 = "ami-0f2b4fc905b0bd1f1"
-    us-west-1 = "ami-074e2d6769f445be5"
-    us-west-2 = "ami-01ed306a12b7d1c96"
+  default = { #Ubuntu Server 24.04 LTS
+    us-east-1 = "ami-0e2c8caa4b6378d8c"
+    us-east-2 = "ami-036841078a4b68e14"
+    us-west-1 = "ami-0657605d763ac72a8"
+    us-west-2 = "ami-05d38da78ce859165"
   }
 }
 

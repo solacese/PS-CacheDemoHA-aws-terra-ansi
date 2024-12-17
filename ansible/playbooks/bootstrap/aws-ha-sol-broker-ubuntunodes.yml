@@ -1,7 +1,7 @@
 ---
 #------------------------------------------------------------------------------------#
 - hosts: sol_brokers
-  remote_user: centos # login as user centos
+  remote_user: ubuntu # login as user ubuntu
   become: true # Run as Root
   pre_tasks:
   - include_vars: vars/common-sol-brokers-vars.yml     # Load common variables for the Ansible Tasks and Roles from this file  
@@ -11,16 +11,16 @@
 # Enable SWAP on the broker
 #####################################################
     - include_role: 
-        name: centos/aws-swap-bootstrap
+        name: ubuntu/aws-swap-bootstrap
 #####################################################
 # Install Docker CE
 #####################################################
     - include_role: 
-        name: centos/docker_ce
+        name: ubuntu/docker_ce
 
 #------------------------------------------------------------------------------------#
 - hosts: ha_sol_primary_nodes:ha_sol_backup_nodes
-  remote_user: centos # login as user centos
+  remote_user: ubuntu # login as user ubuntu
   become: true # Run as Root
   tasks:
 #####################################################
@@ -35,7 +35,7 @@
 
 #------------------------------------------------------------------------------------#
 - hosts: ha_sol_monitor_nodes
-  remote_user: centos # login as user centos
+  remote_user: ubuntu # login as user ubuntu
   become: true # Run as Root
   tasks:
 #####################################################
@@ -50,7 +50,7 @@
 
 #------------------------------------------------------------------------------------#
 - hosts: ha_sol_primary_nodes
-  remote_user: centos # login as user centos
+  remote_user: ubuntu # login as user ubuntu
   become: true # Run as Root
   pre_tasks:
   - include_vars: vars/common-sol-brokers-vars.yml  # Load common variables for the Ansible Tasks and Roles from this file  
@@ -77,7 +77,7 @@
 
 #------------------------------------------------------------------------------------#
 - hosts: ha_sol_backup_nodes
-  remote_user: centos # login as user centos
+  remote_user: ubuntu # login as user ubuntu
   become: true # Run as Root
   pre_tasks:
   - include_vars: vars/common-sol-brokers-vars.yml  # Load common variables for the Ansible Tasks and Roles from this file  
@@ -103,7 +103,7 @@
 
 #------------------------------------------------------------------------------------#
 - hosts: ha_sol_monitor_nodes
-  remote_user: centos # login as user centos
+  remote_user: ubuntu # login as user ubuntu
   become: true # Run as Root
   pre_tasks:
   - include_vars: vars/common-sol-brokers-vars.yml  # Load common variables for the Ansible Tasks and Roles from this file  
@@ -126,18 +126,18 @@
 
 #------------------------------------------------------------------------------------#
 - hosts: sol_brokers
-  remote_user: centos # login as user centos
+  remote_user: ubuntu # login as user ubuntu
   become: true # Run as Root
   tasks:
 #####################################################
 # Install performance monitoring tools HTOP, sysstat (iostat)
 #####################################################
     - include_role: 
-        name: centos/os-bootstrap
+        name: ubuntu/os-bootstrap
 
 #------------------------------------------------------------------------------------#
 - hosts: sol_brokers
-  remote_user: centos # login as user centos
+  remote_user: ubuntu # login as user ubuntu
   become: false # Run as Root
   tasks:
 #####################################################
@@ -154,7 +154,7 @@
 
 #------------------------------------------------------------------------------------#
 - hosts: ha_sol_primary_nodes
-  remote_user: centos # login as user centos
+  remote_user: ubuntu # login as user ubuntu
   become: false # Run as Root
   pre_tasks:
   - include_vars: vars/solcache-solace-semp-vars.yml

@@ -10,7 +10,7 @@
 resource "aws_instance" "client-nodes" {
   count = var.client_nodes_count
   
-  ami                    = var.centOS_ami[var.aws_region]
+  ami                    = var.ubuntu24_ami[var.aws_region]
   key_name               = var.aws_ssh_key_name
   vpc_security_group_ids = var.msging_secgroup_ids == [""] ? ["${aws_security_group.msging_secgroup[0].id}"] : var.msging_secgroup_ids 
   subnet_id              = var.subnet_primary_id == "" ? aws_subnet.solace_primary_subnet[0].id : var.subnet_primary_id
@@ -61,7 +61,7 @@ resource "local_file" "client_inv_file" {
 resource "null_resource" "trigger_client_ansible" {
   provisioner "local-exec" {
     #command = "echo DONE"
-    command = "ansible-playbook -i ${local_file.client_inv_file.filename} -e 'broker_primary_pub_ip=${aws_instance.solace-broker-primary[0].public_ip} broker_backup_pub_ip=${aws_instance.solace-broker-backup[0].public_ip} broker_primary_private_ip=${aws_instance.solace-broker-primary[0].private_ip} broker_backup_private_ip=${aws_instance.solace-broker-backup[0].private_ip}'  --private-key ${var.private_key_path} ../ansible/playbooks/bootstrap/aws-client-centosnodes.yml"
+    command = "ansible-playbook -i ${local_file.client_inv_file.filename} -e 'broker_primary_pub_ip=${aws_instance.solace-broker-primary[0].public_ip} broker_backup_pub_ip=${aws_instance.solace-broker-backup[0].public_ip} broker_primary_private_ip=${aws_instance.solace-broker-primary[0].private_ip} broker_backup_private_ip=${aws_instance.solace-broker-backup[0].private_ip}'  --private-key ${var.private_key_path} ../ansible/playbooks/bootstrap/aws-client-ubuntunodes.yml"
   }
   depends_on = [local_file.client_inv_file]
 }

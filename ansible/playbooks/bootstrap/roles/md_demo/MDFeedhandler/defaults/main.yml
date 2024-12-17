@@ -1,6 +1,6 @@
 ---
 # defaults file for IOTMonitor
-file_owner: centos
+file_owner: ubuntu
 file_mode: "0777"
 sol_cache_vpn_name: Cache_VPN
 sol_cache_clientusr_name: Cache_Usr

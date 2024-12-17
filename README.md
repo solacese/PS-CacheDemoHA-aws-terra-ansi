@@ -130,8 +130,8 @@ and typing "yes" when prompted.
 + Network Route Table
 + Security Group for the SDKPerf nodes
 + Security Group for the PS+ Cache & Client nodes
-+ PS+ Cache Nodes, Running CentOS 7.7
-+ Solace Broker Nodes, Running CentOS 7.7 (HA Configured Nodes)
++ PS+ Cache Nodes, Running Ubuntu Server 24.04 LTS
++ Solace Broker Nodes, Running Ubuntu Server 24.04 LTS (HA Configured Nodes)
 + Solace Broker Data External Disk (gp2 or Premium_LRS, io1 & UltraSSD_LRS can also be provisioned if needed)
 + Ansible Inventory File containing Public & Private IPs for Solace Brokers
 + Ansible Inventory File containing Public & Private IPs for PS+ Cache nodes
@@ -176,8 +176,8 @@ On Market Data Client node:
 
 If you need to customize the PS+ Cache configurations, it can be done by modifing the following files:
 + [/ansible/playbooks/bootstrap/vars/solcache-solace-semp-vars.yml](/ansible/playbooks/bootstrap/vars/solcache-solace-semp-vars.yml) - contains all the values to be used on the SEMP calls used to configure our broker (VPN name, clientusernames, cache clusters, etc)
-+ [/ansible/playbooks/bootstrap/aws-cache-centosnodes.yml](/ansible/playbooks/bootstrap/aws-cache-centosnodes.yml) - contains the ansible tasks, plus the variables (VPN name, clientusername, cache instance, etc.) to be used while configuring the PS+ Cache nodes
-+ [/ansible/playbooks/bootstrap/aws-client-centosnodes.yml](/ansible/playbooks/bootstrap/aws-client-centosnodes.yml) - contains the ansible tasks, plus the variables (VPN name, clientusername, distributed cache name, etc.) to be used while configuring the MarketData node
++ [/ansible/playbooks/bootstrap/aws-cache-ubuntunodes.yml](/ansible/playbooks/bootstrap/aws-cache-ubuntunodes.yml) - contains the ansible tasks, plus the variables (VPN name, clientusername, cache instance, etc.) to be used while configuring the PS+ Cache nodes
++ [/ansible/playbooks/bootstrap/aws-client-ubuntunodes.yml](/ansible/playbooks/bootstrap/aws-client-ubuntunodes.yml) - contains the ansible tasks, plus the variables (VPN name, clientusername, distributed cache name, etc.) to be used while configuring the MarketData node
 + [/ansible/playbooks/bootstrap/roles/md_demo/MDFeedhandler/tasks/main.yml](/ansible/playbooks/bootstrap/roles/md_demo/MDFeedhandler/tasks/main.yml) - contains the ansible tasks, plus the variables to be used while starting the MDFeedHandler processes. Here you could start more than 2 Exchanges, or modify their name.
 
 

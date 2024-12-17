@@ -1,0 +1,13 @@
+---
+# defaults file for docker_ce_ubuntu
+docker_ubuntu_users: []
+# docker_ubuntu_version: latest
+# docker_ubuntu_state: started
+# docker_ubuntu_enabled: true
+docker_ubuntu_daemon_config:
+  storage-driver: overlay2
+  selinux-enabled: true
+  live-restore: true
+#          log-driver: syslog
+  icc: false
+  userland-proxy: false

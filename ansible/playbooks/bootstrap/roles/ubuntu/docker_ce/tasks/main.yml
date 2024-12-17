@@ -1,0 +1,41 @@
+---
+# tasks file for docker_ce_ubuntu
+# https://docs.docker.com/engine/installation/linux/ubuntu/
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+- name: Update apt and install docker-ce
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: true
+- name: mkdir /etc/docker
+  file:
+    dest: /etc/docker
+    state: directory
+- name: configure docker daemon
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+- name: Enable and start Docker service
+  systemd:
+    name: "docker.service"
+    enabled: true
+    state: started
+- name: add users to the docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  with_items: "{{ docker_ubuntu_users }}"
+- name: Install docker-compose
+  get_url: 
+    url : https://github.com/docker/compose/releases/download/v2.32.1/docker-compose-{{ ansible_system }}-{{ ansible_userspace_architecture }}
+    dest: /usr/local/bin/docker-compose
+    mode: 'u=rwx,g=rx,o=rx'
+

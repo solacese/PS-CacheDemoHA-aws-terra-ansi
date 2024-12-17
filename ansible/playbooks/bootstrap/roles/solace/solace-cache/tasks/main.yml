@@ -4,7 +4,7 @@
   file:
     path: "/usr/local/solace"
     state: directory
-    owner: centos
+    owner: ubuntu
 
 - name: Copy solClient to cache nodes
   copy:

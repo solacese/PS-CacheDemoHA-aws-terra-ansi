@@ -20,8 +20,8 @@
     path: "{{ solace_mount_path }}"
     src: "{{ solace_storage_part }}"
     fstype: xfs
-#    opts: defaults
-    opts: nobarrier    
+    opts: defaults
+#    opts: nobarrier    
     state: mounted
 - name: Create "jail" directory
   file:

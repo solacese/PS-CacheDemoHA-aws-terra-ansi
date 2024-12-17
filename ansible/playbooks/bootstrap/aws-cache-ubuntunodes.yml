@@ -1,17 +1,17 @@
 ---
 - hosts: cache_nodes
-  remote_user: centos
+  remote_user: ubuntu
   become: true
   tasks:
     - include_role: 
-        name: centos/aws-swap-bootstrap
+        name: ubuntu/aws-swap-bootstrap
       vars:        
         swap_file_size: 2048
 #####################################################
 # Install performance monitoring tools HTOP, sysstat (iostat)
 #####################################################
     - include_role: 
-        name: centos/os-bootstrap        
+        name: ubuntu/os-bootstrap        
 #####################################################
 # Copy SolCache to cache Node
 #####################################################

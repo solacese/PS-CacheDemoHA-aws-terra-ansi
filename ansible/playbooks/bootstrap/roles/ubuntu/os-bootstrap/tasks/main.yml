@@ -4,15 +4,17 @@
 #  yum: 
 #    name: "*" 
 #    state: latest
-- name: install epel-release
-  yum:
-    name: "epel-release"
-    update_cache: true
+# - name: install epel-release
+#   yum:
+#     name: "epel-release"
+#     update_cache: true
 - name: install htop
-  yum:
+  apt:
     name: "htop"
+    state: latest
     update_cache: true
 - name: install sysstat
-  yum:
+  apt:
     name: "sysstat"
+    state: latest
     update_cache: true

@@ -1,30 +1,30 @@
 ---
 - hosts: client_nodes
-  remote_user: centos
+  remote_user: ubuntu
   become: true
   tasks:
     - include_role: 
-        name: centos/aws-swap-bootstrap
+        name: ubuntu/aws-swap-bootstrap
       vars:        
         swap_file_size: 2048
     - include_role: 
-        name: centos/java-openjdk8-yum
+        name: ubuntu/java-openjdk8-apt
 #####################################################
 # Install performance monitoring tools HTOP, sysstat (iostat)
 #####################################################
     - include_role: 
-        name: centos/os-bootstrap        
+        name: ubuntu/os-bootstrap        
 #####################################################
 # Copy Web Demo to worker Node
 #####################################################
-    - name: install httpd
-      yum:
-        name: "httpd"
-        state: latest 
+    - name: install apache2
+      apt:
+        name: "apache2"
+        state: latest
         update_cache: true
-    - name: Start the httpd daemon
+    - name: Start the apache2 daemon
       service:
-        name: httpd
+        name: apache2
         state: started
         enabled: yes
     - include_role: 

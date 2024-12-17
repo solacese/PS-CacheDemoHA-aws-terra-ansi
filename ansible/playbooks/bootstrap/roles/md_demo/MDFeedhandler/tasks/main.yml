@@ -3,12 +3,12 @@
 - name: Copy MDFeedhandler to worker nodes
   copy:
     src: .
-    dest: /home/centos/MDFeedhandler
+    dest: /home/ubuntu/MDFeedhandler
     owner: "{{ file_owner }}"
     mode: "{{ file_mode }}"
 - name: Execute MDFeedhandler NYSE - {{ sol_broker_primary_private_ip }}
-  shell: nohup java -jar /home/centos/MDFeedhandler/MarketDataFeedhandler.jar -h "{{ sol_broker_primary_private_ip }}":55555,"{{ sol_broker_backup_public_ip }}":55555 -v "{{ sol_cache_vpn_name }}" -u "{{ sol_cache_clientusr_name }}" -p "{{ sol_cache_clientusr_pwd }}" -e NYSE -t MD/TRADES -i /home/centos/MDFeedhandler/config/instruments_NYSE.properties > MD_NYSE.out 2>&1 &
+  shell: nohup java -jar /home/ubuntu/MDFeedhandler/MarketDataFeedhandler.jar -h "{{ sol_broker_primary_private_ip }}":55555,"{{ sol_broker_backup_private_ip }}":55555 -v "{{ sol_cache_vpn_name }}" -u "{{ sol_cache_clientusr_name }}" -p "{{ sol_cache_clientusr_pwd }}" -e NYSE -t MD/TRADES -i /home/ubuntu/MDFeedhandler/config/instruments_NYSE.properties > MD_NYSE.out 2>&1 &
   become: false
 - name: Execute MDFeedhandler BMV - {{ sol_broker_primary_private_ip }}
-  shell: nohup java -jar /home/centos/MDFeedhandler/MarketDataFeedhandler.jar -h "{{ sol_broker_primary_private_ip }}":55555,"{{ sol_broker_backup_public_ip }}":55555 -v "{{ sol_cache_vpn_name }}" -u "{{ sol_cache_clientusr_name }}" -p "{{ sol_cache_clientusr_pwd }}" -e BMV -t MD/TRADES -i /home/centos/MDFeedhandler/config/instruments_BMV.properties > MD_BMV.out 2>&1 &
+  shell: nohup java -jar /home/ubuntu/MDFeedhandler/MarketDataFeedhandler.jar -h "{{ sol_broker_primary_private_ip }}":55555,"{{ sol_broker_backup_private_ip }}":55555 -v "{{ sol_cache_vpn_name }}" -u "{{ sol_cache_clientusr_name }}" -p "{{ sol_cache_clientusr_pwd }}" -e BMV -t MD/TRADES -i /home/ubuntu/MDFeedhandler/config/instruments_BMV.properties > MD_BMV.out 2>&1 &
   become: false

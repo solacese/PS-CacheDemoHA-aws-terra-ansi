@@ -10,7 +10,7 @@
 resource "aws_instance" "cache-nodes" {
   count = var.cache_nodes_count
   
-  ami                    = var.centOS_ami[var.aws_region]
+  ami                    = var.ubuntu24_ami[var.aws_region]
   key_name               = var.aws_ssh_key_name
   vpc_security_group_ids = var.msging_secgroup_ids == [""] ? ["${aws_security_group.msging_secgroup[0].id}"] : var.msging_secgroup_ids 
   subnet_id              = var.subnet_primary_id == "" ? aws_subnet.solace_primary_subnet[0].id : var.subnet_primary_id
@@ -61,7 +61,7 @@ resource "local_file" "cache_inv_file" {
 resource "null_resource" "trigger_cache_ansible" {
   provisioner "local-exec" {
     #command = "echo DONE"
-    command = "ansible-playbook -i ${local_file.cache_inv_file.filename} -e 'broker_primary_private_ip=${aws_instance.solace-broker-primary[0].private_ip} broker_backup_private_ip=${aws_instance.solace-broker-backup[0].private_ip}' --private-key ${var.private_key_path} ../ansible/playbooks/bootstrap/aws-cache-centosnodes.yml"
+    command = "ansible-playbook -i ${local_file.cache_inv_file.filename} -e 'broker_primary_private_ip=${aws_instance.solace-broker-primary[0].private_ip} broker_backup_private_ip=${aws_instance.solace-broker-backup[0].private_ip}' --private-key ${var.private_key_path} ../ansible/playbooks/bootstrap/aws-cache-ubuntunodes.yml"
   }
   depends_on = [local_file.cache_inv_file]
 }
