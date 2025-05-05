@@ -14,11 +14,11 @@ services:
     cap_add:
     - NET_RAW
     ulimits:
-      core: {{ ulimit_core }}
+      core: -1
       memlock: {{ ulimit_memlock }}
       nofile:
-        soft: {{ ulimit_nofile_soft }}
-        hard: {{ ulimit_nofile_hard }}
+        soft: 2448
+        hard: 1048576
     restart: on-failure:5
     volumes:
       - {{ solace_storage_rootpath }}:/var/lib/solace:Z
@@ -26,6 +26,7 @@ services:
       - username_{{ username_admin }}_globalaccesslevel=admin
       - username_{{ username_admin }}_password={{ username_admin_password }}
       - system_scaling_maxconnectioncount={{ system_scaling_maxconnectioncount }}
+      - system_scaling_maxqueuemessagecount=100
       - TZ={{ time_zone }}
       - routername={{ router_name }}
 {{ solace_eval_key }}
