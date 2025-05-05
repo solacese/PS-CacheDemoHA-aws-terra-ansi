@@ -2,10 +2,15 @@
 # defaults file for solace-broker-ent-eval
 solace_edition: standard  #standard, entEVAL or enterprise
 node_role: single
+host_name: primarynode
+router_name: primarynode
+primary_routername: primarynode
+backup_routername: backupnode
+monitor_routername: monitornode
 solace_image_version: latest
 solace_image_name: solace/solace-pubsub-standard
 solace_eval_key: ""
-solace_storage_rootpath: /vmr
+solace_storage_rootpath: /solace
 username_admin: admin
 username_admin_password: admin
 system_scaling_maxconnectioncount: 1000
@@ -13,9 +18,6 @@ time_zone: America/Mexico_City
 container_name: PubSubNode
 shm_size: 2g
 user: "4000"
-ulimit_core: -1
 ulimit_memlock: -1
-ulimit_nofile_soft: 2448
-ulimit_nofile_hard: 10192
 file_owner: root
 file_mode: "0777"

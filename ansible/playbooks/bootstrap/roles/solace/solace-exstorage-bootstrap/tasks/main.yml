@@ -23,33 +23,9 @@
     opts: defaults
 #    opts: nobarrier    
     state: mounted
-- name: Create "jail" directory
+- name: Set user Solace as owner
   file:
-    path: "{{ solace_mount_path }}/jail"
+    path: "{{ solace_mount_path }}"
     state: directory
-    owner: solace
-- name: Create "var" directory
-  file:
-    path: "{{ solace_mount_path }}/var"
-    state: directory
-    owner: solace
-- name: Create "diagnostics" directory
-  file:
-    path: "{{ solace_mount_path }}/diagnostics"
-    state: directory
-    owner: solace
-- name: Create "spool" directory
-  file:
-    path: "{{ solace_mount_path }}/spool"
-    state: directory
-    owner: solace
-- name: Create "spool-cache" directory
-  file:
-    path: "{{ solace_mount_path }}/spool-cache"
-    state: directory
-    owner: solace
-- name: Create "spool-cache-backup" directory
-  file:
-    path: "{{ solace_mount_path }}/spool-cache-backup"
-    state: directory
-    owner: solace
+    owner: "{{ solace_os_user }}"
+

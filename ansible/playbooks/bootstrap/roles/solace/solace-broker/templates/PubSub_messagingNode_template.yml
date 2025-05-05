@@ -3,7 +3,8 @@ version: "3.3"
 
 services:
   primary:
-    container_name: {{ container_name }}
+    container_name: {{ host_name }}
+    hostname: {{ host_name }}
     image: {{ solace_image_name }}:{{ solace_image_version }}
     shm_size: {{ shm_size }}
     network_mode: host
@@ -13,35 +14,31 @@ services:
     cap_add:
     - NET_RAW
     ulimits:
-      core: {{ ulimit_core }}
+      core: -1
       memlock: {{ ulimit_memlock }}
       nofile:
-        soft: {{ ulimit_nofile_soft }}
-        hard: {{ ulimit_nofile_hard }}
+        soft: 2448
+        hard: 1048576
     restart: on-failure:5
     volumes:
-      - {{ solace_storage_rootpath }}/jail:/var/lib/solace/jail:Z
-      - {{ solace_storage_rootpath }}/var:/var/lib/solace/var:Z
-      - {{ solace_storage_rootpath }}/diagnostics:/var/lib/solace/diagnostics:Z
-      - {{ solace_storage_rootpath }}/spool:/var/lib/solace/spool:Z
-      - {{ solace_storage_rootpath }}/spool-cache:/var/lib/solace/spool-cache:Z
-      - {{ solace_storage_rootpath }}/spool-cache-backup:/var/lib/solace/spool-cache-backup:Z
+      - {{ solace_storage_rootpath }}:/var/lib/solace:Z
     environment:
       - username_{{ username_admin }}_globalaccesslevel=admin
       - username_{{ username_admin }}_password={{ username_admin_password }}
       - system_scaling_maxconnectioncount={{ system_scaling_maxconnectioncount }}
+      - system_scaling_maxqueuemessagecount=100
       - TZ={{ time_zone }}
       - nodetype=message_routing
-      - routername={{ node_role }}
+      - routername={{ router_name }}
       - redundancy_matelink_connectvia= {{ ha_ip_mate }}
       - redundancy_activestandbyrole={{ node_role }}
       - redundancy_group_password={{ ha_password }}
       - redundancy_enable=yes
-      - redundancy_group_node_primary_nodetype=message_routing
-      - redundancy_group_node_primary_connectvia={{ ha_ip_primary }}
-      - redundancy_group_node_backup_nodetype=message_routing
-      - redundancy_group_node_backup_connectvia={{ ha_ip_backup }}
-      - redundancy_group_node_monitor_nodetype=monitoring
-      - redundancy_group_node_monitor_connectvia={{ ha_ip_monitor }}
+      - redundancy_group_node_{{ primary_routername }}_nodetype=message_routing
+      - redundancy_group_node_{{ primary_routername }}_connectvia={{ ha_ip_primary }}
+      - redundancy_group_node_{{ backup_routername }}_nodetype=message_routing
+      - redundancy_group_node_{{ backup_routername }}_connectvia={{ ha_ip_backup }}
+      - redundancy_group_node_{{ monitor_routername }}_nodetype=monitoring
+      - redundancy_group_node_{{ monitor_routername }}_connectvia={{ ha_ip_monitor }}
       - configsync_enable=yes
 {{ solace_eval_key }}

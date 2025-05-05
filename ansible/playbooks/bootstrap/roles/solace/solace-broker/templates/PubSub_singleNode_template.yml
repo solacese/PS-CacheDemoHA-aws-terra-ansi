@@ -3,7 +3,8 @@ version: "3.3"
 
 services:
   primary:
-    container_name: {{ container_name }}
+    container_name: {{ host_name }}
+    hostname: {{ host_name }}
     image: {{ solace_image_name }}:{{ solace_image_version }}
     shm_size: {{ shm_size }}
     network_mode: host
@@ -20,15 +21,11 @@ services:
         hard: {{ ulimit_nofile_hard }}
     restart: on-failure:5
     volumes:
-      - {{ solace_storage_rootpath }}/jail:/var/lib/solace/jail:Z
-      - {{ solace_storage_rootpath }}/var:/var/lib/solace/var:Z
-      - {{ solace_storage_rootpath }}/diagnostics:/var/lib/solace/diagnostics:Z
-      - {{ solace_storage_rootpath }}/spool:/var/lib/solace/spool:Z
-      - {{ solace_storage_rootpath }}/spool-cache:/var/lib/solace/spool-cache:Z
-      - {{ solace_storage_rootpath }}/spool-cache-backup:/var/lib/solace/spool-cache-backup:Z
+      - {{ solace_storage_rootpath }}:/var/lib/solace:Z
     environment:
       - username_{{ username_admin }}_globalaccesslevel=admin
       - username_{{ username_admin }}_password={{ username_admin_password }}
       - system_scaling_maxconnectioncount={{ system_scaling_maxconnectioncount }}
       - TZ={{ time_zone }}
+      - routername={{ router_name }}
 {{ solace_eval_key }}

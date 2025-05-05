@@ -22,6 +22,8 @@
 - hosts: ha_sol_primary_nodes:ha_sol_backup_nodes
   remote_user: ubuntu # login as user ubuntu
   become: true # Run as Root
+  pre_tasks:
+  - include_vars: vars/common-sol-brokers-vars.yml     # Load common variables for the Ansible Tasks and Roles from this file  
   tasks:
 #####################################################
 # Format, Partition External Disk, and prepare for Broker Usage
@@ -37,6 +39,8 @@
 - hosts: ha_sol_monitor_nodes
   remote_user: ubuntu # login as user ubuntu
   become: true # Run as Root
+  pre_tasks:
+  - include_vars: vars/common-sol-brokers-vars.yml     # Load common variables for the Ansible Tasks and Roles from this file 
   tasks:
 #####################################################
 # Format, Partition External Disk, and prepare for Broker Usage
@@ -63,17 +67,19 @@
       vars:
       #Determine the current Index on the Ansible Inventory based on the broker public IP via "groups['ha_sol_primary_nodes'].index(inventory_hostname)"
       #And use that index to retreive corresponding private IPs for the HA_cluster
-        container_name: PubSubPrimaryNode
+        host_name: primarynode
+        router_name: primarynode
+        primary_routername: primarynode
+        backup_routername: backupnode
+        monitor_routername: monitornode
         ha_ip_primary: "{{ groups['ha_sol_primary_privateip'][ groups['ha_sol_primary_nodes'].index(inventory_hostname) ] }}" #.index(inventory_hostname) 10.0.0.1
         ha_ip_backup: "{{ groups['ha_sol_backup_privateip'][ groups['ha_sol_primary_nodes'].index(inventory_hostname) ] }}"
         ha_ip_monitor: "{{ groups['ha_sol_monitor_privateip'][ groups['ha_sol_primary_nodes'].index(inventory_hostname) ] }}"
-
         ha_ip_mate: "{{ groups['ha_sol_backup_privateip'][ groups['ha_sol_primary_nodes'].index(inventory_hostname) ] }}"
         ha_password: ha_pwd{{ groups['ha_sol_primary_nodes'].index(inventory_hostname) }} #Add current node Ansible Inventory Index to the HA password
         node_role: primary
         solace_edition: entEVAL
         system_scaling_maxconnectioncount: 1000
-        #ulimit_nofile_hard: 42192
 
 #------------------------------------------------------------------------------------#
 - hosts: ha_sol_backup_nodes
@@ -90,7 +96,11 @@
       vars:
       #Determine the current Index on the Ansible Inventory based on the broker public IP via "groups['ha_sol_backup_nodes'].index(inventory_hostname)"
       #And use that index to retreive corresponding private IPs for the HA_cluster
-        container_name: PubSubBackupNode
+        host_name: backupnode
+        router_name: backupnode
+        primary_routername: primarynode
+        backup_routername: backupnode
+        monitor_routername: monitornode
         ha_ip_primary: "{{ groups['ha_sol_primary_privateip'][ groups['ha_sol_backup_nodes'].index(inventory_hostname) ] }}" #.index(inventory_hostname) 10.0.0.1
         ha_ip_backup: "{{ groups['ha_sol_backup_privateip'][ groups['ha_sol_backup_nodes'].index(inventory_hostname) ] }}"
         ha_ip_monitor: "{{ groups['ha_sol_monitor_privateip'][ groups['ha_sol_backup_nodes'].index(inventory_hostname) ] }}"
@@ -99,7 +109,6 @@
         node_role: backup
         solace_edition: entEVAL
         system_scaling_maxconnectioncount: 1000
-        #ulimit_nofile_hard: 42192
 
 #------------------------------------------------------------------------------------#
 - hosts: ha_sol_monitor_nodes
@@ -116,7 +125,11 @@
       vars:
       #Determine the current Index on the Ansible Inventory based on the broker public IP via "groups['ha_sol_monitor_nodes'].index(inventory_hostname)"
       #And use that index to retreive corresponding private IPs for the HA_cluster
-        container_name: PubSubMonitorNode
+        host_name: monitornode
+        router_name: monitornode
+        primary_routername: primarynode
+        backup_routername: backupnode
+        monitor_routername: monitornode
         ha_ip_primary: "{{ groups['ha_sol_primary_privateip'][ groups['ha_sol_monitor_nodes'].index(inventory_hostname) ] }}" #.index(inventory_hostname) 10.0.0.1
         ha_ip_backup: "{{ groups['ha_sol_backup_privateip'][ groups['ha_sol_monitor_nodes'].index(inventory_hostname) ] }}"
         ha_ip_monitor: "{{ groups['ha_sol_monitor_privateip'][ groups['ha_sol_monitor_nodes'].index(inventory_hostname) ] }}"

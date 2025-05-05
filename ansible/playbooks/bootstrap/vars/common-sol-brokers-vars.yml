@@ -18,7 +18,9 @@ docker_ubuntu_daemon_config:
 #####################################################
 # config variables for the Ansible Rol - solace/solace-broker-ent-eval
 #####################################################
-solace_storage_rootpath: /var/opt/vmr
+solace_os_user: solace
+solace_os_user_id: 4000
+solace_storage_rootpath: /solace
 username_admin: admin 
 username_admin_password: admin
 file_owner: ubuntu
